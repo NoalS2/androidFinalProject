@@ -84,6 +84,7 @@ public class GroceryListFragment extends Fragment {
                     viewModel.updatePurchased((GroceryItem) groceryItems.get(i));
                 }
                 viewModel.deletePurchased();
+                viewModel.deletePurchasedFromItems();
             }
         });
     }
