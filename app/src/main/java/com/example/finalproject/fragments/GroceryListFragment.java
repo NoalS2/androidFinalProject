@@ -25,10 +25,9 @@ public class GroceryListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         GroceryItemViewModel viewModel = new ViewModelProvider(getActivity()).get(GroceryItemViewModel.class);
-        ObservableArrayList groceryItems = viewModel.getItems();
 
-        GroceryListAdapter adapter = new GroceryListAdapter(groceryItems);
-        groceryItems.addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
+        GroceryListAdapter adapter = new GroceryListAdapter(viewModel.getItems());
+        viewModel.getItems().addOnListChangedCallback(new ObservableList.OnListChangedCallback() {
             @Override
             public void onChanged(ObservableList sender) {
                 getActivity().runOnUiThread(() -> {
@@ -77,14 +76,14 @@ public class GroceryListFragment extends Fragment {
         });
 
         view.findViewById(R.id.finishedButton).setOnClickListener((v) -> {
-            for (int i = 0; i < groceryItems.size(); i++) {
+            for (int i = 0; i < viewModel.getItems().size(); i++) {
                 View itemView = recyclerView.getChildAt(i);
                 CheckBox checkBox = itemView.findViewById(R.id.checkBox);
                 if (checkBox.isChecked()) {
-                    viewModel.updatePurchased((GroceryItem) groceryItems.get(i));
+                    viewModel.updatePurchased((GroceryItem) viewModel.getItems().get(i));
                 }
                 viewModel.deletePurchased();
-                viewModel.deletePurchasedFromItems();
+//                viewModel.deletePurchasedFromItems();
             }
         });
     }

@@ -84,6 +84,7 @@ public class GroceryItemViewModel extends AndroidViewModel {
                 }
             }
 
+            deletePurchasedFromItems();
         }).start();
     }
 
